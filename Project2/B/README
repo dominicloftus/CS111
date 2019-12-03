@@ -1,0 +1,104 @@
+NAME: Dominic Loftus
+EMAIL: dominicloftus@yahoo.com
+ID: 204910863
+
+FILES
+
+SortedList.h: header file for doubly linked list
+
+SortedList.c: source file for double linked list
+
+lab2_list.c: source file for multithreaded linked list operations
+
+lab2b_list.csv: data file for generating graphs
+
+lab2_list.gp: gnuplot file for generating graphs
+
+profile.out: profile of lab2_list running with spinlock synchronization and of thread worker function
+
+GRAPHS
+
+lab2b_1.png: throughput vs threads for different synchronization options
+
+lab2b_2.png: wait time per mutex lock and time per operation for mutex lock
+
+lab2b_3.png: successful iterations vs threads for different synchronization options
+
+lab2b_4.png: throughput vs threads for mutex lock
+
+lab2b_5.png: throughput vs threads for spin lock
+
+MAKEFILE
+
+default: builds executable lab2_list
+
+tests: runs tests and outputs data to lab2b_list.csv
+
+profile: runs profiler and outputs data to profile.out
+
+graphs: runs gnuplot to generate graphs
+
+dist: generates deliverable tarball
+
+clean: removes tarball and lab2_list executable
+
+
+2.3.1
+In the one and two thread tests the CPU likely spends most of its time running
+operations.
+
+These are probably the most expensive parts because there aren't many threads meaning
+there won't be many context switches or waiting for locks so most of the time will
+be running operations.
+
+In high thread spin lock tests the CPU spends most of its time spinning waiting for
+the spin lock to be released from another thread wasting a lot of time doing nothing.
+
+In high thread mutex lock test the CPU likely spends most of its time running 
+operations because when a thread doesn't have the lock it blocks itself and waits
+for the lock allowing the unblocked thread to run list operations.
+
+2.3.2
+The lines of code consuming the most CPU time are the
+while(__sync_lock_test_and_set(spinlock+list_num,1));
+lines that appear before inserting elements and before looking up and deleting elements.
+
+This operation becomes very expensive with a large number of threads because a thread
+will never block while waiting for a spin lock so it will continue executing that
+instruction as long as the scheduler lets it until the lock is released by the
+thread holding it.
+
+2.3.3
+The average lock wait time rises dramatically with contending threads because
+there are more resources trying to access the same locks meaning some will need to
+wait longer while others execute.
+
+The completion time per operation rises less dramatically because even though
+the threads need to wait longer for the lock, there's still going to be a thread
+executing instructions at a similar rate leading to a fairly constant operations per
+second. The gradual rise comes from having more switches between threads.
+
+It's possible for the wait time per operation to go up faster than completion time
+per operation as more threads are added the CPU will still be doing work at about
+same rate. But this leads to more threads being left waiting while only a few can
+execute at once.
+
+2.3.4
+As the number of lists increases, the performance improves as we get increased throughput.
+
+The throughput will continue increasing with more lists until a certain point where it
+can't increase any further, either because each element has its own list or the
+overhead associated with maintaining such a large number of lists out weighs the 
+benefit having the finer granularity locked lists.
+
+This does not appear to be true in the above curves likely because the time spent 
+locking in the N way partitioned list adds more time than the single list with
+fewer threads.
+
+
+
+
+
+
+
+

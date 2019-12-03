@@ -1,0 +1,67 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <getopt.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+mraa_aio_context temp;
+mraa_gpio_context button;
+
+int main(int argc, char* argv[]){
+
+  int period = 1;
+  char scale = 'F';
+  int fd;
+  char* filename = ""; 
+
+  struct option options[] =
+    {
+     {"period", required_argument, NULL, 'p'},
+     {"scale", required_argument, NULL, 's'},
+     {"log", required_argument, NULL, 'l'},
+     {0, 0, 0, 0},
+    };
+
+  int opt;
+  while((opt = getopt_long(argc, argv, "", options, NULL)) != -1){
+    switch(opt){
+    case 'p':
+      period = atoi(optarg);
+      break;
+
+    case 's':
+      ;
+      char let = optarg[0];
+      if(let == 'C')
+	scale = 'C';
+      else if(let == 'F');
+      else{
+	fprintf(stderr, "Error: Unknown --scale= option used.\n");
+	exit(1);
+      }
+      break;
+
+    case 'l':
+      strcat(filename, optarg);
+      fd = open(filename, (O_RDWR | O_CREAT));
+      if(fd == -1){
+	fprintf(stderr, "Error: Unable to open file\n");
+	exit(1);
+      }
+      break;
+
+    default:
+      fprintf(stderr, "Error: Unknown flag used");
+      exit(1);
+      break;
+    }
+  }
+
+  temp = mraa_aio_init(1);
+  button = mraa_gpio_init(60);
+			     
+			 
+}

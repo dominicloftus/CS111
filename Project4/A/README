@@ -1,0 +1,20 @@
+NAME: Dominic Loftus
+EMAIL: dominicloftus@yahoo.com
+ID: 204910863
+
+Files included
+
+my_beaglebone.jpg: selfie of me with my assembled beaglebone
+
+connected.png: screenshot of connected beaglebone with correct name after
+running command ifconfig
+
+copy.png: screenshot of scp command copying a helloworld.c file from my
+local machine to my beaglebone
+
+build_run.png: screenshot of compilation of program and running the program
+
+git.png: screenshot of installing git on beaglebone and using git to clone
+a repository to my beaglebone
+
+Makefile: only contains default option which creates tar file

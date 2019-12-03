@@ -1,0 +1,19 @@
+NAME: Dominic Loftus
+EMAIL: dominicloftus@yahoo.com
+ID: 204910863
+
+For this project I chose to work in c because I knew that after reading the csv
+values that the structure and organization that the language provides would make
+checking for corruption easy which it was.
+
+Files included
+
+lab3b.c: source file for file system corruption reporting program
+
+Makefile
+
+default: compiles lab3b executable
+
+dist: build tarball
+
+clean: removes executable and tarball

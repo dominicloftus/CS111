@@ -1,0 +1,15 @@
+NAME: Dominic Loftus
+EMAIL: dominicloftus@yahoo.com
+ID: 204910863
+
+Files included:
+lab1a.c: Source code for program that takes character at a time input from the keyboard
+and writes it back on no echo. With option --shell=programName the program takes
+polled input from keyboard which is processed and output via pipe to another
+program whose output is piped back to the original program and printed out.
+
+Makefile:
+default - compiles program with -Wall and -Wextra options
+clean - removes files made by makefile
+dist - creates tarball
+

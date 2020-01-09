@@ -1,9 +1,0 @@
-
-
-.SILENT:
-
-default:
-	gcc -o lab3b -Wall -Wextra lab3b.c
-
-clean:
-	rm -f lab3b
